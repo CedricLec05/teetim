@@ -1,6 +1,6 @@
 <?php
 // Indiquer la page
-$page = "teeshirts";
+$page = "casquettes";
 
 // Inclue le fichier commun contenant le haut du code des écrans de UI
 include_once('commun/entete.inc.php');

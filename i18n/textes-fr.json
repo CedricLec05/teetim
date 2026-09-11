@@ -2,7 +2,7 @@
     "entete": {
         "meta": {
             "title":"teeTIM // fibre naturelle ... conception artificielle",   
-            "desc":"Page d'accueil du concepteur de vêtements 100% fait au Québec, conçus par les étudiants du TIM à l'aide de designs produits par intelligence artificielle, et fabriqués avec des fibres 100% naturelles et biologiques.",
+            "desc":"Page d'accueil du concepteur de vêtements 100% fait au Québec, conçus par les étudiants du TIM à l'aide de designs produits par intelligence artificielle, et fabriqués avec des fibres 100% naturelles et biologiques."
         },
             "logoAlt":"Accueil",   
             "recherchePlaceholder":"Recherche", 
@@ -21,15 +21,35 @@
       "para2":"Teeshirt en V, col rond, ample ou ajusté, à manches courtes ou à manches longues pour les plus frileux, uni ou à motifs pour styliser une tenue… Le teeshirt est disponible dans une variété de couleurs, de styles et de motifs."
     },
     "teeshirts": {
-        
+        "amorceH1" : "Nos teeshirts",
+        "enConstruction" : "À venir..."
     },
     "casquettes": {
-        
+        "amorceH1": "Nos casquettes",
+        "enConstruction" : "À venir..."
     },
     "hoodies": {
         
     },
-    "p2p": {
-        
+    "pp": {
+        "achats":{
+            "titre": "Vos achats",
+            "navFaq": "Foire aux questions",
+            "navLivraisons" : "Livraison de votre colis",
+            "navConditions" : "Conditions de vente",
+            "navConfid" : "Politique de confidentialité"
+        },
+        "apropos" :{
+            "titre": "À propos de teeTIM",
+            "navCompagnie" :"La compagnie",
+            "navEquipe" :"L'équipe",
+            "navEmploi" :"Emplois"
+        },
+        "coordonnees":{
+            "titre": "Nous joindre",
+            "tel" : "Sans frais :",
+            "email" : "Courriel :"
+        },
+        "droits" : "Tous droits réservés,"
     }
 }
