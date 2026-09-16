@@ -1,6 +1,14 @@
 <?php
-// Afficher les paramètres de la requête HTTP (querystring)
-// print_r($_GET);
+// Déterminer dynamiquement quels sont les langues disponibles sur le site
+$languesDispo = [];
+$contenuI18n = scandir('i18n');
+for ($i = 0; $i < count($contenuI18n); $i++) {
+    // pour chaque fichier json garder la partie avant l'extension et l'ajouter au tableau $languesDispo
+    if ($contenuI18n[$i] !== '.' && $contenuI18n[$i] !== '..') {
+        $languesDispo[] = substr($contenuI18n[$i], 0, 2);
+    }
+}
+
 
 // Choix de langue
 // 1) Par défaut : francais
@@ -9,19 +17,19 @@ $langue = 'fr';
 
 // 2) Si l'utilisateur a fait un choix de langue par le passé (témoins HTTP/cookies)
 // alors changer la variable au code de langue sauvegardé
-if (isset($_COOKIE['teetimLangueChoisie'])) {
+if (isset($_COOKIE['teetimLangueChoisie']) && in_array($_COOKIE['teetimLangueChoisie'], $languesDispo)) {
     $langue = $_COOKIE['teetimLangueChoisie'];
 }
 
 // 3) Si l'utilisateur clique le bouton de lange, changer la variable au code de langue correspondant
-if (isset($_GET["lan"])) {
+if (isset($_GET["lan"]) && in_array($_GET["lan"], $languesDispo)) {
     $langue = $_GET["lan"];
 
     // Mémoriser ce choix dans un témoin HTTP (cookie)
     setcookie('teetimLangueChoisie', $langue, time() + 365 * 24 * 60 * 60);
 }
 // A) Lire le fichier JSON contenant les textes
-$textesJSON = file_get_contents('i18n/textes-' . $langue . '.json');
+$textesJSON = file_get_contents('i18n/' . $langue . '.json');
 
 // B) Convertir la chaine JSON en structure PHP
 $textes = json_decode($textesJSON);
@@ -49,15 +57,24 @@ $_pp = $textes->pp;
     <title></title>
     <meta name="description" content="">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link
+        rel="icon"
+        type="image/png"
+        href="images/favicon.png" />
 </head>
 
 <body>
     <div class="conteneur">
         <header>
             <nav class="barre-haut">
-                <a class="" href="?lan=fr">fr</a>
-                <a class="" href="?lan=en">en</a>
+                <!-- Générer dynamiquement (à partir du tableau $languesDispo) les boutons de langue, en suivant le gabarit ci-dessous-->
+                <?php for ($i = 0; $i < count($languesDispo); $i++) { ?>
+                    <!-- Gabarit des liens (balise A) qui représentent les boutons de langue-->
+                    <a
+                        class="<?= $langue === $languesDispo[$i] ? 'actif' : ''; ?>"
+                        href="?lan=<?= $languesDispo[$i]; ?>">
+                        <?= $languesDispo[$i]; ?></a>
+                <?php }; ?>
             </nav>
             <nav class="barre-logo">
                 <label for="cc-btn-responsive" class="material-icons burger">menu</label>
@@ -68,9 +85,15 @@ $_pp = $textes->pp;
             <input type="checkbox" id="cc-btn-responsive">
             <nav class="principale">
                 <label for="cc-btn-responsive" class="menu-controle material-icons">close</label>
-                <a href="teeshirts.php"><?= $_ent->navigationPrincipale->navTeeshirts; ?></a>
-                <a href="casquettes.php"><?= $_ent->navigationPrincipale->navCasquettes; ?></a>
-                <a href="hoodies.php"><?= $_ent->navigationPrincipale->navHoodies; ?></a>
+                <a class="<?= $page === 'teeshirts' ? 'actif' : ''; ?>"
+                    href="teeshirts.php">
+                    <?= $_ent->navigationPrincipale->navTeeshirts; ?></a>
+                <a class="<?= $page === 'casquettes' ? 'actif' : ''; ?>"
+                    href="casquettes.php">
+                    <?= $_ent->navigationPrincipale->navCasquettes; ?></a>
+                <a
+                    href="hoodies.php">
+                    <?= $_ent->navigationPrincipale->navHoodies; ?></a>
                 <span class="separateur"></span>
                 <a href="aide.php">Aide</a>
                 <a href="apropos.php"><?= $_ent->navigationPrincipale->navNous; ?></a>
